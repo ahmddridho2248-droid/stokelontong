@@ -19,6 +19,16 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('categories', \App\Http\Controllers\CategoryController::class);
     Route::resource('products', \App\Http\Controllers\ProductController::class);
+    
+    // Transactions In
+    Route::get('/transactions/in', [\App\Http\Controllers\TransactionController::class, 'createIn'])->name('transactions.in.create');
+    Route::post('/transactions/in', [\App\Http\Controllers\TransactionController::class, 'storeIn'])->name('transactions.in.store');
+    
+    // Transactions Out
+    Route::get('/transactions/out', [\App\Http\Controllers\TransactionController::class, 'createOut'])->name('transactions.out.create');
+    Route::post('/transactions/out', [\App\Http\Controllers\TransactionController::class, 'storeOut'])->name('transactions.out.store');
+    
+    Route::resource('transactions', \App\Http\Controllers\TransactionController::class);
 });
 
 require __DIR__.'/auth.php';
