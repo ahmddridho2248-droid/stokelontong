@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\TransactionDetail;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +84,8 @@ class TransactionController extends Controller
     public function createIn()
     {
         $products = Product::all();
-        return view('transactions.create-in', compact('products'));
+        $categories = Category::all();
+        return view('transactions.create-in', compact('products', 'categories'));
     }
 
     /**
@@ -127,6 +129,35 @@ class TransactionController extends Controller
             DB::rollBack();
             return back()->withInput()->with('error', $e->getMessage());
         }
+    }
+
+    /**
+     * Store new product via AJAX
+     */
+    public function storeProductAjax(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'purchase_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+        ]);
+
+        $validated['sku'] = 'SKU-' . time() . '-' . rand(100, 999);
+        $validated['stock'] = 0;
+        $validated['min_stock'] = 0;
+
+        $product = Product::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'product' => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'sku' => $product->sku,
+                'stock' => $product->stock
+            ]
+        ]);
     }
 
     // Other standard resource methods can be kept empty for now or implemented later

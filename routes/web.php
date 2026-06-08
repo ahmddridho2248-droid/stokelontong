@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     // Transactions In
     Route::get('/transactions/in', [\App\Http\Controllers\TransactionController::class, 'createIn'])->name('transactions.in.create');
     Route::post('/transactions/in', [\App\Http\Controllers\TransactionController::class, 'storeIn'])->name('transactions.in.store');
+    Route::post('/transactions/api/products', [\App\Http\Controllers\TransactionController::class, 'storeProductAjax'])->name('transactions.api.products.store');
     
     // Transactions Out
     Route::get('/transactions/out', [\App\Http\Controllers\TransactionController::class, 'createOut'])->name('transactions.out.create');
