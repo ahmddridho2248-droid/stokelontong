@@ -30,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/transactions/out', [\App\Http\Controllers\TransactionController::class, 'storeOut'])->name('transactions.out.store');
     
     Route::resource('transactions', \App\Http\Controllers\TransactionController::class);
+
+    // Restocks Queue
+    Route::get('/restocks', [\App\Http\Controllers\RestockQueueController::class, 'index'])->name('restocks.index');
+    Route::post('/restocks', [\App\Http\Controllers\RestockQueueController::class, 'store'])->name('restocks.store');
+    Route::post('/restocks/process', [\App\Http\Controllers\RestockQueueController::class, 'process'])->name('restocks.process');
 });
 
 require __DIR__.'/auth.php';
