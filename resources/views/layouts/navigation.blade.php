@@ -28,6 +28,9 @@
     <x-nav-link :href="route('transactions.out.create')" :active="request()->routeIs('transactions.out.*')">
         Barang Keluar
     </x-nav-link>
+    <x-nav-link :href="route('restocks.index')" :active="request()->routeIs('restocks.*')">
+        Antrean Restock
+    </x-nav-link>
 </div>
             </div>
 
@@ -94,6 +97,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('transactions.out.create')" :active="request()->routeIs('transactions.out.*')">
                 Barang Keluar
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('restocks.index')" :active="request()->routeIs('restocks.*')">
+                Antrean Restock
             </x-responsive-nav-link>
         </div>
 
